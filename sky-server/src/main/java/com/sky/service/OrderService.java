@@ -54,4 +54,18 @@ public interface OrderService {
      */
     void repetition(Long id);
 
+    /**
+     * 商家端订单搜索
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * 各个状态的订单数量统计
+     *
+     * @return OrderStatisticsVO
+     */
+    OrderStatisticsVO statistics();
+
 }
