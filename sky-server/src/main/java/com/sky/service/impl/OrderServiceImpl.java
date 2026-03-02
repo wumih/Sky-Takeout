@@ -528,6 +528,26 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
+     * 客户催单
+     *
+     * @param id 订单id
+     */
+    public void reminder(Long id) {
+        // 根据id查询订单，校验订单是否存在
+        Orders ordersDB = orderMapper.getById(id);
+        if (ordersDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+
+        // 通过 WebSocket 向商家端推送催单消息（type=2）
+        Map map = new HashMap();
+        map.put("type", 2); // 消息类型：2 表示客户催单
+        map.put("orderId", id);
+        map.put("content", "订单号：" + ordersDB.getNumber());
+        webSocketServer.sendToAllClient(JSON.toJSONString(map));
+    }
+
+    /**
      * 检查用户收货地址是否超出配送范围
      * @param address 用户收货的完整地址字符串
      *
