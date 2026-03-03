@@ -76,4 +76,20 @@ public interface OrderMapper {
      */
     Double sumByMap(Map map);
 
+    /**
+     * 根据动态条件统计订单数量
+     * @param map 参数 Map：begin(开始时间)、end(结束时间)、status(订单状态，可为null)
+     * @return 订单数量
+     */
+    Integer countByMap(Map map);
+
+    /**
+     * 查询指定时间范围内销量排名前10的商品
+     * @param begin 开始时间
+     * @param end   结束时间
+     * @return 商品销量列表（已按销量降序，最多10条）
+     */
+    List<GoodsSalesDTO> getSalesTop10(LocalDateTime begin, LocalDateTime end);
+
 }
+

@@ -83,5 +83,30 @@
             </if>
         </where>
     </select>
+    <!-- 根据动态条件统计订单数量 -->
+    <select id="countByMap" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM `orders`
+        <where>
+            <if test="begin != null">AND order_time &gt;= #{begin}</if>
+            <if test="end != null">AND order_time &lt;= #{end}</if>
+            <if test="status != null">AND status = #{status}</if>
+        </where>
+    </select>
+    <!-- 查询指定时间范围内销量排名前10的商品 -->
+    <select id="getSalesTop10" resultType="com.sky.dto.GoodsSalesDTO">
+        SELECT od.name, SUM(od.number) AS number
+        FROM order_detail od
+        JOIN `orders` o ON od.order_id = o.id
+        WHERE o.status = 5
+        <if test="begin != null">
+            AND o.order_time &gt;= #{begin}
+        </if>
+        <if test="end != null">
+            AND o.order_time &lt;= #{end}
+        </if>
+        GROUP BY od.name
+        ORDER BY number DESC
+        LIMIT 0, 10
+    </select>
 
 </mapper>

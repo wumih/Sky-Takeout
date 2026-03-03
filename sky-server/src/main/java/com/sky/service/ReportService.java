@@ -1,5 +1,7 @@
 package com.sky.service;
 
+import com.sky.vo.OrderReportVO;
+import com.sky.vo.SalesTop10ReportVO;
 import com.sky.vo.TurnoverReportVO;
 import com.sky.vo.UserReportVO;
 import java.time.LocalDate;
@@ -21,5 +23,15 @@ public interface ReportService {
      * @return UserReportVO（dateList、newUserList、totalUserList 均为逗号拼接字符串）
      */
     UserReportVO getUserStatistics(LocalDate begin, LocalDate end);
+
+    /**
+     * 统计指定时间区间内的订单数据
+     */
+    OrderReportVO getOrderStatistics(LocalDate begin, LocalDate end);
+
+    /**
+     * 查询指定时间区间内销量排名前10的商品
+     */
+    SalesTop10ReportVO getSalesTop10(LocalDate begin, LocalDate end);
 
 }
